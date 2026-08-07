@@ -25,30 +25,20 @@
 
   /* ─── AVATAR VOICE ─── */
   const avatarVid  = document.getElementById('avatarVid');
-  const soundBtn   = document.getElementById('soundBtn');
-  const icMuted    = document.getElementById('icMuted');
-  const icSound    = document.getElementById('icSound');
-  const soundLabel = document.getElementById('soundLabel');
   const heroSec    = document.getElementById('hero');
-  let voiceMuted = false;
-  let voiceOn = true;
+  let voiceMuted = true;
+  let voiceOn = false;
   let heroVis = true;
 
   function enableVoice() {
     if (!avatarVid) return;
-    avatarVid.muted = false; avatarVid.volume = 0.85;
-    if (icMuted && icSound) { icMuted.style.display = 'none'; icSound.style.display = 'block'; }
-    if (soundLabel) soundLabel.textContent = 'Mute';
-    if (soundBtn) soundBtn.classList.add('active');
+    avatarVid.muted = false;
     voiceOn = true;
     voiceMuted = false;
   }
   function muteVoice() {
     if (!avatarVid) return;
     avatarVid.muted = true;
-    if (icMuted && icSound) { icMuted.style.display = 'block'; icSound.style.display = 'none'; }
-    if (soundLabel) soundLabel.textContent = 'Click to hear me';
-    if (soundBtn) soundBtn.classList.remove('active');
     voiceOn = false;
     voiceMuted = true;
   }
@@ -59,11 +49,6 @@
   }
   // Register voice unlock — trigger on ANY interaction for immediate playback
   ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.addEventListener(e, firstInteraction));
-  if (soundBtn) soundBtn.addEventListener('click', () => {
-    if (!voiceOn) { enableVoice(); }
-    else if (!avatarVid.muted) { muteVoice(); }
-    else { enableVoice(); }
-  });
   if (heroSec && avatarVid) {
     new IntersectionObserver(entries => {
       heroVis = entries[0].isIntersecting;
