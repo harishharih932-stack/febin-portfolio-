@@ -99,9 +99,27 @@
   /* ─── HOVER-TO-PLAY on wcard-vid-wrap ─── */
   document.querySelectorAll('[data-hover-play]').forEach(wrap => {
     const vid = wrap.querySelector('video');
-    if (!vid) return; // iframe cards — hover CTA shows but no video play needed
-    wrap.addEventListener('mouseenter', () => vid.play().catch(() => {}));
-    wrap.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+    if (!vid) return;
+    wrap.addEventListener('mouseenter', () => {
+      // Temporarily mute the hero avatar voice if it is playing
+      if (avatarVid && !avatarVid.muted) {
+        avatarVid.muted = true;
+        avatarVid.dataset.wasPlaying = "true";
+      }
+      vid.muted = false; // UNMUTE!
+      vid.volume = 0.85;
+      vid.play().catch(() => {});
+    });
+    wrap.addEventListener('mouseleave', () => {
+      vid.pause();
+      vid.currentTime = 0;
+      vid.muted = true; // Mute back
+      // Restore hero avatar voice if it was active
+      if (avatarVid && avatarVid.dataset.wasPlaying === "true" && heroVis) {
+        avatarVid.muted = false;
+        delete avatarVid.dataset.wasPlaying;
+      }
+    });
   });
 
   /* ─── 3D TILT ─── */
