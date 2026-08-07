@@ -197,6 +197,7 @@ em{font-style:italic;color:var(--acc)}
   background:rgba(0,0,0,.3);opacity:0;transition:opacity .35s;z-index:5;
 }
 .wcard-vid-wrap:hover .wcard-hover-cta{opacity:1}
+.wcard-vid-wrap.playing .wcard-hover-cta{opacity:0;pointer-events:none}
 .wcard-play-ring{
   width:72px;height:72px;border-radius:50%;
   background:rgba(200,169,110,.2);border:2px solid rgba(200,169,110,.6);

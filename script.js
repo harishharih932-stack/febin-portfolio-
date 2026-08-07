@@ -108,12 +108,14 @@
       }
       vid.muted = false; // UNMUTE!
       vid.volume = 0.85;
+      wrap.classList.add('playing');
       vid.play().catch(() => {});
     });
     wrap.addEventListener('mouseleave', () => {
       vid.pause();
       vid.currentTime = 0;
       vid.muted = true; // Mute back
+      wrap.classList.remove('playing');
       // Restore hero avatar voice if it was active
       if (avatarVid && avatarVid.dataset.wasPlaying === "true" && heroVis) {
         avatarVid.muted = false;
