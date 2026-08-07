@@ -30,32 +30,39 @@
   const icSound    = document.getElementById('icSound');
   const soundLabel = document.getElementById('soundLabel');
   const heroSec    = document.getElementById('hero');
-  let voiceOn = false, voiceMuted = false, heroVis = true;
+  let voiceMuted = false;
+  let voiceOn = true;
+  let heroVis = true;
 
   function enableVoice() {
     if (!avatarVid) return;
     avatarVid.muted = false; avatarVid.volume = 0.85;
-    icMuted.style.display = 'none'; icSound.style.display = 'block';
-    soundLabel.textContent = 'Mute'; soundBtn.classList.add('active'); voiceOn = true;
+    if (icMuted && icSound) { icMuted.style.display = 'none'; icSound.style.display = 'block'; }
+    if (soundLabel) soundLabel.textContent = 'Mute';
+    if (soundBtn) soundBtn.classList.add('active');
+    voiceOn = true;
+    voiceMuted = false;
   }
   function muteVoice() {
     if (!avatarVid) return;
     avatarVid.muted = true;
-    icMuted.style.display = 'block'; icSound.style.display = 'none';
-    soundLabel.textContent = 'Click to hear me'; soundBtn.classList.remove('active');
+    if (icMuted && icSound) { icMuted.style.display = 'block'; icSound.style.display = 'none'; }
+    if (soundLabel) soundLabel.textContent = 'Click to hear me';
+    if (soundBtn) soundBtn.classList.remove('active');
+    voiceOn = false;
+    voiceMuted = true;
   }
   function firstInteraction() {
-    // IMPORTANT: Only enable voice AFTER loader finishes
-    if (!loaderDone || voiceOn || voiceMuted) return;
-    setTimeout(() => { if (!voiceMuted && heroVis && loaderDone) enableVoice(); }, 800);
-    ['mousemove','click','touchstart','keydown'].forEach(e => document.removeEventListener(e, firstInteraction));
+    if (!loaderDone) return;
+    enableVoice();
+    ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.removeEventListener(e, firstInteraction));
   }
-  // Register voice unlock — trigger on mousemove for immediate playback
-  ['mousemove','click','touchstart','keydown'].forEach(e => document.addEventListener(e, firstInteraction));
+  // Register voice unlock — trigger on ANY interaction for immediate playback
+  ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.addEventListener(e, firstInteraction));
   if (soundBtn) soundBtn.addEventListener('click', () => {
-    if (!voiceOn) { enableVoice(); voiceMuted = false; }
-    else if (!avatarVid.muted) { muteVoice(); voiceMuted = true; }
-    else { enableVoice(); voiceMuted = false; }
+    if (!voiceOn) { enableVoice(); }
+    else if (!avatarVid.muted) { muteVoice(); }
+    else { enableVoice(); }
   });
   if (heroSec && avatarVid) {
     new IntersectionObserver(entries => {
