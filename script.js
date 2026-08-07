@@ -48,10 +48,10 @@
     // IMPORTANT: Only enable voice AFTER loader finishes
     if (!loaderDone || voiceOn || voiceMuted) return;
     setTimeout(() => { if (!voiceMuted && heroVis && loaderDone) enableVoice(); }, 800);
-    ['click','touchstart','keydown'].forEach(e => document.removeEventListener(e, firstInteraction));
+    ['mousemove','click','touchstart','keydown'].forEach(e => document.removeEventListener(e, firstInteraction));
   }
-  // Register voice unlock — only on deliberate actions, NOT mousemove
-  ['click','touchstart','keydown'].forEach(e => document.addEventListener(e, firstInteraction));
+  // Register voice unlock — trigger on mousemove for immediate playback
+  ['mousemove','click','touchstart','keydown'].forEach(e => document.addEventListener(e, firstInteraction));
   if (soundBtn) soundBtn.addEventListener('click', () => {
     if (!voiceOn) { enableVoice(); voiceMuted = false; }
     else if (!avatarVid.muted) { muteVoice(); voiceMuted = true; }
