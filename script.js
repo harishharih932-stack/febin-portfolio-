@@ -192,9 +192,20 @@
         revObs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  // Very low threshold + no negative margin = triggers as soon as element enters view
+  }, { threshold: 0.02, rootMargin: '0px 0px 0px 0px' });
 
   revealEls.forEach(el => revObs.observe(el));
+
+  // Also immediately reveal elements already in viewport on page load
+  setTimeout(() => {
+    revealEls.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('visible');
+      }
+    });
+  }, 1900); // after loader done
 
   /* ─── 7. SKILL BAR ANIMATION ────────────────────── */
   const skillFills = document.querySelectorAll('.sk-fill');
