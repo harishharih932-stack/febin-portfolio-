@@ -49,73 +49,45 @@
   </ul>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     HERO — WHITE BG, AVATAR FULL RIGHT SIDE (like reference)
-═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     HERO — WHITE BG, LEFT TEXT, RIGHT AVATAR
+══════════════════════════════════════ -->
 <section class="hero" id="hero">
-
-  <!-- LEFT CONTENT -->
   <div class="hero-left">
     <div class="hero-avail" id="heroAvail">
       <span class="avail-dot"></span> Available for projects
     </div>
-
     <h1 class="hero-h1" id="heroH1">
       <span class="h1-line h1-first">Febin</span>
       <span class="h1-line h1-last">Lawrence</span>
     </h1>
-
     <p class="hero-role" id="heroRole">Video Editor &amp; Post-Production</p>
-
     <p class="hero-desc" id="heroDesc">
       Crafting stories through frames — cinematic editing,<br>bold color grades, and reels that stop the scroll.
     </p>
-
     <div class="hero-stats" id="heroStats">
       <div class="hs"><strong>30+</strong><small>Happy Clients</small></div>
       <div class="hs-line"></div>
       <div class="hs"><strong>500+</strong><small>Views Generated</small></div>
       <div class="hs-line"></div>
-      <div class="hs"><strong>100%</strong><small>Client Satisfaction</small></div>
+      <div class="hs"><strong>100%</strong><small>Satisfaction</small></div>
     </div>
-
     <div class="hero-btns" id="heroBtns">
       <a href="#work" class="btn-fill">View My Work</a>
       <a href="#contact" class="btn-ghost">Let's Talk</a>
     </div>
-
-    <!-- Sound toggle — click to unmute avatar voice -->
     <button class="sound-btn" id="soundBtn" title="Click to hear Febin speak">
-      <svg id="icMuted" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M11 5 6 9H2v6h4l5 4V5z"/>
-        <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-      </svg>
-      <svg id="icSound" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none">
-        <path d="M11 5 6 9H2v6h4l5 4V5z"/>
-        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-      </svg>
+      <svg id="icMuted" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+      <svg id="icSound" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
       <span id="soundLabel">Click to hear me</span>
     </button>
   </div>
 
-  <!-- RIGHT — AVATAR VIDEO FULL BLEED (no box/card) -->
+  <!-- RIGHT — AVATAR FULL BLEED -->
   <div class="hero-right" id="heroRight">
-    <!-- Gradient fade on left edge so avatar blends into white bg -->
     <div class="hr-fade-left"></div>
-
-    <!-- D-ID watermark killer — overlay same color as video background -->
     <div class="did-killer"></div>
-
-    <video
-      id="avatarVid"
-      src="assets/avatar.mp4"
-      autoplay
-      loop
-      playsinline
-      muted
-    ></video>
-
-    <!-- Bottom mask to hide D-ID footer logo -->
+    <video id="avatarVid" src="assets/avatar.mp4" autoplay loop playsinline muted></video>
     <div class="hr-fade-bottom"></div>
   </div>
 
@@ -128,128 +100,140 @@
 <!-- ═══ MARQUEE ═══ -->
 <div class="marquee-wrap">
   <div class="marquee-track" id="marqueeTrack">
-    <span>Video Editing</span><b>✦</b>
-    <span>Color Grading</span><b>✦</b>
-    <span>Motion Graphics</span><b>✦</b>
-    <span>Reels &amp; Shorts</span><b>✦</b>
-    <span>Brand Films</span><b>✦</b>
-    <span>Sound Design</span><b>✦</b>
-    <span>Ad Creatives</span><b>✦</b>
-    <span>Cinematic Grading</span><b>✦</b>
-    <!-- duplicate for seamless loop -->
-    <span>Video Editing</span><b>✦</b>
-    <span>Color Grading</span><b>✦</b>
-    <span>Motion Graphics</span><b>✦</b>
-    <span>Reels &amp; Shorts</span><b>✦</b>
-    <span>Brand Films</span><b>✦</b>
-    <span>Sound Design</span><b>✦</b>
-    <span>Ad Creatives</span><b>✦</b>
-    <span>Cinematic Grading</span><b>✦</b>
+    <span>Video Editing</span><b>✦</b><span>Color Grading</span><b>✦</b>
+    <span>Motion Graphics</span><b>✦</b><span>Reels &amp; Shorts</span><b>✦</b>
+    <span>Brand Films</span><b>✦</b><span>Sound Design</span><b>✦</b>
+    <span>Ad Creatives</span><b>✦</b><span>Cinematic Grading</span><b>✦</b>
+    <span>Video Editing</span><b>✦</b><span>Color Grading</span><b>✦</b>
+    <span>Motion Graphics</span><b>✦</b><span>Reels &amp; Shorts</span><b>✦</b>
+    <span>Brand Films</span><b>✦</b><span>Sound Design</span><b>✦</b>
+    <span>Ad Creatives</span><b>✦</b><span>Cinematic Grading</span><b>✦</b>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     DARK ZONE — all sections after hero
-═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     DARK ZONE
+══════════════════════════════════════ -->
 <main class="dark-zone" id="darkZone">
 
-<!-- WORK -->
+<!-- ══ WORKS — SEPARATE CARDS, HOVER TO PLAY ══ -->
 <section class="sec" id="work">
   <div class="con">
+
     <div class="sec-head" data-reveal>
       <span class="sec-tag">Portfolio</span>
       <h2 class="sec-title">Selected<br><em>Works</em></h2>
-      <p class="sec-desc">Real edits. They autoplay as you scroll into view — no touching needed.</p>
+      <p class="sec-desc">Move your cursor over any video — it plays automatically. Hover away to pause.</p>
     </div>
 
-    <div class="vgrid">
+    <!-- VIDEO CARDS GRID — each separate, full clear -->
+    <div class="works-grid" id="worksGrid">
 
-      <div class="vc vc-wide" data-reveal data-d="0">
-        <div class="vc-screen" data-tilt>
-          <!-- Google Drive Folder Embed - shows your actual videos -->
+      <!-- Card 1 — Reel Edit -->
+      <div class="wcard" data-reveal data-d="0">
+        <div class="wcard-num">01</div>
+        <div class="wcard-vid-wrap" data-hover-play>
           <iframe
-            src="https://drive.google.com/embeddedfolderview?id=1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ#grid"
-            style="width:100%;height:100%;border:none;background:#0a0a0a;"
+            class="wcard-iframe"
+            src="https://drive.google.com/file/d/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ/preview"
+            allow="autoplay"
             allowfullscreen
-            title="Febin Lawrence Portfolio Videos"
+            title="Portfolio Video 1"
           ></iframe>
-          <div class="vc-ov"><span class="vc-cat">Google Drive Portfolio</span><h3>All Sample Videos</h3></div>
-          <div class="vc-glow"></div>
-        </div>
-        <div class="vc-meta"><h4>Portfolio Sample Reels</h4><div class="vc-tags"><span>Color Grade</span><span>Motion Graphics</span><span>Ad Creative</span></div></div>
-      </div>
-
-      <div class="vc" data-reveal data-d="100">
-        <div class="vc-screen" data-tilt>
-          <div class="vc-placeholder" style="--vc-bg:linear-gradient(135deg,#c8374a,#8b1a2a)">
-            <div class="vc-play">▶</div>
-            <span>📱</span>
-            <p>REEL &amp; SHORT-FORM</p>
-            <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank" class="vc-drive-link">▶ View on Drive</a>
+          <div class="wcard-hover-cta">
+            <div class="wcard-play-ring"><span>▶</span></div>
           </div>
-          <div class="vc-ov"><span class="vc-cat">Social Reel</span><h3>Instagram Reel</h3></div>
-          <div class="vc-glow"></div>
         </div>
-        <div class="vc-meta"><h4>Scroll-Stopping Reel</h4><div class="vc-tags"><span>Reels</span><span>Fast Cuts</span><span>Trending</span></div></div>
+        <div class="wcard-info">
+          <div class="wcard-cat">Commercial Reel</div>
+          <h3 class="wcard-title">Cinematic Product Showcase</h3>
+          <div class="wcard-tags"><span>Color Grade</span><span>Motion Graphics</span><span>Ad Creative</span></div>
+        </div>
       </div>
 
-      <div class="vc" data-reveal data-d="200">
-        <div class="vc-screen" data-tilt>
-          <div class="vc-placeholder" style="--vc-bg:linear-gradient(135deg,#1a3a4a,#0d2233)">
-            <div class="vc-play">▶</div>
-            <span>🎬</span>
-            <p>BRAND FILM</p>
-            <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank" class="vc-drive-link">▶ View on Drive</a>
+      <!-- Card 2 — Instagram Reel (Drive folder) -->
+      <div class="wcard wcard-rev" data-reveal data-d="100">
+        <div class="wcard-num">02</div>
+        <div class="wcard-vid-wrap" data-hover-play>
+          <div class="wcard-placeholder" style="--pg:linear-gradient(135deg,#c8374a 0%,#3a0010 100%)">
+            <div class="wp-icon">📱</div>
+            <p>Instagram Reel</p>
+            <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank" class="wp-link">▶ Watch on Drive</a>
           </div>
-          <div class="vc-ov"><span class="vc-cat">Brand Film</span><h3>Brand Story</h3></div>
-          <div class="vc-glow"></div>
-        </div>
-        <div class="vc-meta"><h4>Brand Narrative Film</h4><div class="vc-tags"><span>Brand Film</span><span>Cinematic</span><span>Story</span></div></div>
-      </div>
-
-      <div class="vc" data-reveal data-d="300">
-        <div class="vc-screen" data-tilt>
-          <div class="vc-placeholder" style="--vc-bg:linear-gradient(135deg,#1a2a1a,#0d1f0d)">
-            <div class="vc-play">▶</div>
-            <span>▶️</span>
-            <p>YOUTUBE EDIT</p>
-            <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank" class="vc-drive-link">▶ View on Drive</a>
+          <div class="wcard-hover-cta">
+            <div class="wcard-play-ring"><span>▶</span></div>
           </div>
-          <div class="vc-ov"><span class="vc-cat">YouTube Edit</span><h3>Long-Form Video</h3></div>
-          <div class="vc-glow"></div>
         </div>
-        <div class="vc-meta"><h4>YouTube Long-form Edit</h4><div class="vc-tags"><span>YouTube</span><span>Pacing</span><span>Retention</span></div></div>
+        <div class="wcard-info">
+          <div class="wcard-cat">Social Media</div>
+          <h3 class="wcard-title">Scroll-Stopping Instagram Reel</h3>
+          <div class="wcard-tags"><span>Reels</span><span>Fast Cuts</span><span>Trending</span></div>
+        </div>
       </div>
 
-      <!-- Upload slots -->
-      <div class="vc upload-vc" data-reveal data-d="400">
-        <div class="vc-screen upload-zone" id="uz1">
-          <div class="uz-prompt"><div class="uz-ico">+</div><p>Add Your Video</p><input type="file" accept="video/*" class="uz-input"/></div>
-          <video class="uz-prev" loop playsinline muted style="display:none"></video>
+      <!-- Card 3 — Brand Film -->
+      <div class="wcard" data-reveal data-d="200">
+        <div class="wcard-num">03</div>
+        <div class="wcard-vid-wrap" data-hover-play>
+          <div class="wcard-placeholder" style="--pg:linear-gradient(135deg,#1a3a5a 0%,#03111e 100%)">
+            <div class="wp-icon">🎬</div>
+            <p>Brand Narrative Film</p>
+            <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank" class="wp-link">▶ Watch on Drive</a>
+          </div>
+          <div class="wcard-hover-cta">
+            <div class="wcard-play-ring"><span>▶</span></div>
+          </div>
         </div>
-        <div class="vc-meta"><h4 contenteditable="true" spellcheck="false">Project Title</h4><div class="vc-tags"><span contenteditable="true" spellcheck="false">Category</span></div></div>
+        <div class="wcard-info">
+          <div class="wcard-cat">Brand Film</div>
+          <h3 class="wcard-title">Cinematic Brand Story</h3>
+          <div class="wcard-tags"><span>Brand Film</span><span>Cinematic</span><span>Story</span></div>
+        </div>
       </div>
 
-      <div class="vc upload-vc" data-reveal data-d="500">
-        <div class="vc-screen upload-zone" id="uz2">
-          <div class="uz-prompt"><div class="uz-ico">+</div><p>Add Your Video</p><input type="file" accept="video/*" class="uz-input"/></div>
-          <video class="uz-prev" loop playsinline muted style="display:none"></video>
+      <!-- Card 4 — YouTube Long-Form -->
+      <div class="wcard wcard-rev" data-reveal data-d="300">
+        <div class="wcard-num">04</div>
+        <div class="wcard-vid-wrap" data-hover-play>
+          <div class="wcard-placeholder" style="--pg:linear-gradient(135deg,#1e3a1e 0%,#071007 100%)">
+            <div class="wp-icon">▶️</div>
+            <p>YouTube Long-Form Edit</p>
+            <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank" class="wp-link">▶ Watch on Drive</a>
+          </div>
+          <div class="wcard-hover-cta">
+            <div class="wcard-play-ring"><span>▶</span></div>
+          </div>
         </div>
-        <div class="vc-meta"><h4 contenteditable="true" spellcheck="false">Project Title</h4><div class="vc-tags"><span contenteditable="true" spellcheck="false">Category</span></div></div>
+        <div class="wcard-info">
+          <div class="wcard-cat">YouTube Edit</div>
+          <h3 class="wcard-title">Long-Form YouTube Content</h3>
+          <div class="wcard-tags"><span>YouTube</span><span>Pacing</span><span>Retention</span></div>
+        </div>
       </div>
 
+    </div><!-- /works-grid -->
+
+    <!-- SINGLE + BUTTON to add new video -->
+    <div class="add-video-wrap" data-reveal>
+      <button class="add-video-btn" id="addVideoBtn" title="Add your video">
+        <span class="avb-plus">+</span>
+        <span class="avb-label">Add Video</span>
+      </button>
+      <input type="file" accept="video/*" id="addVideoInput" style="display:none" />
+      <p class="add-video-hint">Click + to add a new video to your portfolio</p>
     </div>
 
     <div class="drive-cta" data-reveal>
       <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank" class="drive-btn">
-        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M1.72 19.5L8.47 8.25l3.02 5.25L8.47 19.5H1.72zm9.81 0l3-5.25h8.74l-3 5.25H11.53zm-2.56-7.5L5.28 7.5H18.72l-3.69 4.5H9z"/></svg>
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M1.72 19.5L8.47 8.25l3.02 5.25L8.47 19.5H1.72zm9.81 0l3-5.25h8.74l-3 5.25H11.53zm-2.56-7.5L5.28 7.5H18.72l-3.69 4.5H9z"/></svg>
         View All on Google Drive
       </a>
     </div>
+
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ══ ABOUT ══ -->
 <section class="sec" id="about">
   <div class="con">
     <div class="about-g">
@@ -270,12 +254,11 @@
           </div>
         </div>
       </div>
-
       <div class="about-txt" data-reveal data-d="150">
         <span class="sec-tag">About Me</span>
         <h2 class="sec-title">The Story<br>Behind the<br><em>Edit</em></h2>
         <p class="ab-lead">I'm Febin Lawrence — a freelance video editor who turns raw footage into stories that feel. When editing is done right, the viewer doesn't notice the cuts. They just feel the emotion.</p>
-        <p class="ab-body">With hands-on experience across YouTube content, brand films, social reels, and ad creatives, I bring technical precision and creative instinct to every frame. My work is built on fast turnarounds and an obsession with pacing and rhythm.</p>
+        <p class="ab-body">With hands-on experience across YouTube content, brand films, social reels, and ad creatives, I bring technical precision and creative instinct to every frame.</p>
         <div class="ab-chips">
           <span>Adobe Premiere Pro</span><span>After Effects</span><span>DaVinci Resolve</span>
           <span>CapCut</span><span>Adobe Audition</span><span>Photoshop</span>
@@ -286,7 +269,7 @@
   </div>
 </section>
 
-<!-- SKILLS -->
+<!-- ══ SKILLS ══ -->
 <section class="sec" id="skills">
   <div class="con">
     <div class="sec-head centered" data-reveal>
@@ -294,47 +277,41 @@
       <h2 class="sec-title">Skills &amp; <em>Tools</em></h2>
     </div>
     <div class="sk-grid">
-      <div class="sk-card" style="--h:270" data-reveal data-d="0" data-tilt>
-        <div class="sk-ico">Pr</div><h4>Adobe Premiere Pro</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="95"></div></div>
-        <span class="sk-pct">95%</span>
+      <div class="sk-card" data-reveal data-d="0" data-tilt>
+        <div class="sk-ico" style="--h:260">Pr</div><h4>Adobe Premiere Pro</h4>
+        <div class="sk-bar"><div class="sk-fill" data-w="95"></div></div><span class="sk-pct">95%</span>
         <p>Primary editing tool — timelines, multicam, sequences, export workflows.</p>
       </div>
-      <div class="sk-card" style="--h:200" data-reveal data-d="80" data-tilt>
-        <div class="sk-ico">Dv</div><h4>DaVinci Resolve</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="90"></div></div>
-        <span class="sk-pct">90%</span>
+      <div class="sk-card" data-reveal data-d="80" data-tilt>
+        <div class="sk-ico" style="--h:30">Dv</div><h4>DaVinci Resolve</h4>
+        <div class="sk-bar"><div class="sk-fill" data-w="90"></div></div><span class="sk-pct">90%</span>
         <p>Professional color grading, LUT work, node-based color science.</p>
       </div>
-      <div class="sk-card" style="--h:320" data-reveal data-d="160" data-tilt>
-        <div class="sk-ico">Ae</div><h4>After Effects</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="85"></div></div>
-        <span class="sk-pct">85%</span>
+      <div class="sk-card" data-reveal data-d="160" data-tilt>
+        <div class="sk-ico" style="--h:320">Ae</div><h4>After Effects</h4>
+        <div class="sk-bar"><div class="sk-fill" data-w="85"></div></div><span class="sk-pct">85%</span>
         <p>Motion graphics, kinetic typography, logo reveals &amp; animations.</p>
       </div>
-      <div class="sk-card" style="--h:140" data-reveal data-d="240" data-tilt>
-        <div class="sk-ico">Cc</div><h4>CapCut Pro</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="92"></div></div>
-        <span class="sk-pct">92%</span>
+      <div class="sk-card" data-reveal data-d="240" data-tilt>
+        <div class="sk-ico" style="--h:180">Cc</div><h4>CapCut Pro</h4>
+        <div class="sk-bar"><div class="sk-fill" data-w="92"></div></div><span class="sk-pct">92%</span>
         <p>Fast-paced reels, trending transitions &amp; mobile-first short content.</p>
       </div>
-      <div class="sk-card" style="--h:30" data-reveal data-d="320" data-tilt>
-        <div class="sk-ico">Au</div><h4>Adobe Audition</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="75"></div></div>
-        <span class="sk-pct">75%</span>
+      <div class="sk-card" data-reveal data-d="320" data-tilt>
+        <div class="sk-ico" style="--h:120">Au</div><h4>Adobe Audition</h4>
+        <div class="sk-bar"><div class="sk-fill" data-w="75"></div></div><span class="sk-pct">75%</span>
         <p>Audio cleanup, noise removal, music sync &amp; SFX layering.</p>
       </div>
-      <div class="sk-card" style="--h:220" data-reveal data-d="400" data-tilt>
-        <div class="sk-ico">Ps</div><h4>Photoshop</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="80"></div></div>
-        <span class="sk-pct">80%</span>
+      <div class="sk-card" data-reveal data-d="400" data-tilt>
+        <div class="sk-ico" style="--h:220">Ps</div><h4>Photoshop</h4>
+        <div class="sk-bar"><div class="sk-fill" data-w="80"></div></div><span class="sk-pct">80%</span>
         <p>Thumbnail design, frame compositing &amp; visual assets creation.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- ══ SERVICES ══ -->
 <section class="sec" id="services">
   <div class="con">
     <div class="sec-head" data-reveal>
@@ -342,41 +319,17 @@
       <h2 class="sec-title">Services</h2>
     </div>
     <div class="svc-list">
-      <div class="svc-row" data-reveal>
-        <div class="svc-n">01</div>
-        <div class="svc-b"><h3>Video Editing</h3><p>From raw footage to polished story — precise cuts, seamless transitions, and pacing that keeps viewers hooked.</p></div>
-        <div class="svc-arr">↗</div>
-      </div>
-      <div class="svc-row" data-reveal>
-        <div class="svc-n">02</div>
-        <div class="svc-b"><h3>Color Grading</h3><p>Cinematic color correction and creative LUT-based grading using DaVinci Resolve — sets the mood and makes your brand iconic.</p></div>
-        <div class="svc-arr">↗</div>
-      </div>
-      <div class="svc-row" data-reveal>
-        <div class="svc-n">03</div>
-        <div class="svc-b"><h3>Reels &amp; Short-Form Content</h3><p>Scroll-stopping, fast-paced content for Instagram Reels, YouTube Shorts, and TikTok — built with trending transitions.</p></div>
-        <div class="svc-arr">↗</div>
-      </div>
-      <div class="svc-row" data-reveal>
-        <div class="svc-n">04</div>
-        <div class="svc-b"><h3>Motion Graphics</h3><p>Animated titles, lower thirds, logo reveals, and kinetic typography — adds professionalism and energy to every frame.</p></div>
-        <div class="svc-arr">↗</div>
-      </div>
-      <div class="svc-row" data-reveal>
-        <div class="svc-n">05</div>
-        <div class="svc-b"><h3>Sound Design &amp; Mixing</h3><p>SFX layering, audio cleanup, music sync and dynamic mixing — a cinematic audio landscape that amplifies emotion.</p></div>
-        <div class="svc-arr">↗</div>
-      </div>
-      <div class="svc-row" data-reveal>
-        <div class="svc-n">06</div>
-        <div class="svc-b"><h3>Ad Creatives &amp; Brand Films</h3><p>High-converting video ads and brand narratives — punchy, on-brand, optimized for social platform performance.</p></div>
-        <div class="svc-arr">↗</div>
-      </div>
+      <div class="svc-row" data-reveal><div class="svc-n">01</div><div class="svc-b"><h3>Video Editing</h3><p>From raw footage to polished story — precise cuts, seamless transitions, and pacing that keeps viewers hooked.</p></div><div class="svc-arr">↗</div></div>
+      <div class="svc-row" data-reveal><div class="svc-n">02</div><div class="svc-b"><h3>Color Grading</h3><p>Cinematic color correction using DaVinci Resolve — sets the mood and makes your brand iconic.</p></div><div class="svc-arr">↗</div></div>
+      <div class="svc-row" data-reveal><div class="svc-n">03</div><div class="svc-b"><h3>Reels &amp; Short-Form</h3><p>Scroll-stopping content for Instagram Reels, YouTube Shorts, and TikTok — built with trending transitions.</p></div><div class="svc-arr">↗</div></div>
+      <div class="svc-row" data-reveal><div class="svc-n">04</div><div class="svc-b"><h3>Motion Graphics</h3><p>Animated titles, lower thirds, logo reveals — adds professionalism to every frame.</p></div><div class="svc-arr">↗</div></div>
+      <div class="svc-row" data-reveal><div class="svc-n">05</div><div class="svc-b"><h3>Sound Design</h3><p>SFX layering, audio cleanup, music sync — a cinematic audio landscape.</p></div><div class="svc-arr">↗</div></div>
+      <div class="svc-row" data-reveal><div class="svc-n">06</div><div class="svc-b"><h3>Ad Creatives &amp; Brand Films</h3><p>High-converting video ads and brand narratives — punchy, on-brand, optimized for social.</p></div><div class="svc-arr">↗</div></div>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
+<!-- ══ STATS ══ -->
 <div class="stats-band" data-reveal>
   <div class="con">
     <div class="stats-row">
@@ -386,12 +339,12 @@
       <div class="stat-sep"></div>
       <div class="stat"><strong class="sn" data-count="3">0</strong><span>+</span><p>Years Experience</p></div>
       <div class="stat-sep"></div>
-      <div class="stat"><strong class="sn" data-count="100">0</strong><span>%</span><p>Client Satisfaction</p></div>
+      <div class="stat"><strong class="sn" data-count="100">0</strong><span>%</span><p>Satisfaction</p></div>
     </div>
   </div>
 </div>
 
-<!-- PROCESS -->
+<!-- ══ PROCESS ══ -->
 <section class="sec" id="process">
   <div class="con">
     <div class="sec-head centered" data-reveal>
@@ -400,15 +353,15 @@
     </div>
     <div class="proc-flow">
       <div class="pf" data-reveal data-d="0"><div class="pf-c">01</div><div class="pf-line"></div><h4>Discovery Call</h4><p>Align on vision, goals, references, and timeline.</p></div>
-      <div class="pf" data-reveal data-d="100"><div class="pf-c">02</div><div class="pf-line"></div><h4>Footage Review</h4><p>Review raw clips, audio, and map structure of edit.</p></div>
+      <div class="pf" data-reveal data-d="100"><div class="pf-c">02</div><div class="pf-line"></div><h4>Footage Review</h4><p>Review raw clips, audio, and map structure.</p></div>
       <div class="pf" data-reveal data-d="200"><div class="pf-c">03</div><div class="pf-line"></div><h4>First Cut</h4><p>Rough assembly with pacing, structure, transitions.</p></div>
-      <div class="pf" data-reveal data-d="300"><div class="pf-c">04</div><div class="pf-line last"></div><h4>Revisions</h4><p>Polish audio, color, and cuts. 2 rounds included.</p></div>
+      <div class="pf" data-reveal data-d="300"><div class="pf-c">04</div><div class="pf-line"></div><h4>Revisions</h4><p>Polish audio, color, and cuts. 2 rounds included.</p></div>
       <div class="pf" data-reveal data-d="400"><div class="pf-c">05</div><div class="pf-line last"></div><h4>Final Delivery</h4><p>Exported in required format and resolution.</p></div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- ══ TESTIMONIALS ══ -->
 <section class="sec" id="testimonials">
   <div class="con">
     <div class="sec-head centered" data-reveal>
@@ -416,77 +369,49 @@
       <h2 class="sec-title">What Clients <em>Say</em></h2>
     </div>
     <div class="test-g">
-      <div class="test-c" data-reveal data-d="0" data-tilt>
-        <div class="tc-q">"</div>
-        <p>Febin understood the mood before I even finished explaining. Clean, cinematic, and perfectly paced. Will work again.</p>
-        <div class="tc-a"><div class="tc-av">R</div><div><strong>Rahul Menon</strong><small>YouTuber &amp; Content Creator</small></div></div>
-      </div>
-      <div class="test-c" data-reveal data-d="100" data-tilt>
-        <div class="tc-q">"</div>
-        <p>We needed a brand film in under a week. Febin delivered in five days — better than agencies quoted three weeks for.</p>
-        <div class="tc-a"><div class="tc-av">S</div><div><strong>Sneha Iyer</strong><small>Marketing Manager, Studio Volt</small></div></div>
-      </div>
-      <div class="test-c" data-reveal data-d="200" data-tilt>
-        <div class="tc-q">"</div>
-        <p>The color grading and sound design transformed raw footage into something that looked like a Netflix production.</p>
-        <div class="tc-a"><div class="tc-av">A</div><div><strong>Arjun Das</strong><small>Filmmaker &amp; Director</small></div></div>
-      </div>
+      <div class="test-c" data-reveal data-d="0" data-tilt><div class="tc-q">"</div><p>Febin understood the mood before I even finished explaining. Clean, cinematic, and perfectly paced. Will work again.</p><div class="tc-a"><div class="tc-av">R</div><div><strong>Rahul Menon</strong><small>YouTuber &amp; Content Creator</small></div></div></div>
+      <div class="test-c" data-reveal data-d="100" data-tilt><div class="tc-q">"</div><p>We needed a brand film in under a week. Febin delivered in five days — better than agencies quoted three weeks for.</p><div class="tc-a"><div class="tc-av">S</div><div><strong>Sneha Iyer</strong><small>Marketing Manager</small></div></div></div>
+      <div class="test-c" data-reveal data-d="200" data-tilt><div class="tc-q">"</div><p>The color grading transformed raw footage into something that looked like a Netflix production.</p><div class="tc-a"><div class="tc-av">A</div><div><strong>Arjun Das</strong><small>Filmmaker &amp; Director</small></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- ══ FAQ ══ -->
 <section class="sec" id="faq">
   <div class="con">
     <div class="faq-g">
       <div class="faq-l" data-reveal>
         <span class="sec-tag">FAQ</span>
         <h2 class="sec-title">Common<br><em>Questions</em></h2>
-        <p style="color:rgba(255,255,255,0.4);margin-top:20px;line-height:1.7;">Can't find your answer?<br>Reach out directly.</p>
         <a href="#contact" class="btn-fill" style="margin-top:28px;display:inline-flex;">Ask a Question</a>
       </div>
       <div class="faq-r" data-reveal data-d="150">
-        <div class="faq-item">
-          <button class="faq-q">What's your turnaround time? <span>+</span></button>
-          <div class="faq-a"><p>Most projects delivered within 3–5 business days. Rush delivery available — just mention your deadline upfront.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">How many revisions do I get? <span>+</span></button>
-          <div class="faq-a"><p>Every project includes 2 rounds of revisions. Additional rounds can be arranged if needed.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">What formats do you deliver? <span>+</span></button>
-          <div class="faq-a"><p>MP4 (H.264/H.265) at 1080p or 4K. Platform-specific (9:16 reels, 16:9 YouTube). ProRes, MOV on request.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">How do I get started? <span>+</span></button>
-          <div class="faq-a"><p>WhatsApp or Instagram message with your brief. Quick call, I send a quote, and we get rolling.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Do you work with international clients? <span>+</span></button>
-          <div class="faq-a"><p>Yes! Files via Google Drive or WeTransfer. Communication via WhatsApp, Email, or video call.</p></div>
-        </div>
+        <div class="faq-item"><button class="faq-q">What's your turnaround time? <span>+</span></button><div class="faq-a"><p>Most projects delivered within 3–5 business days. Rush delivery available.</p></div></div>
+        <div class="faq-item"><button class="faq-q">How many revisions do I get? <span>+</span></button><div class="faq-a"><p>Every project includes 2 rounds of revisions. Additional rounds can be arranged.</p></div></div>
+        <div class="faq-item"><button class="faq-q">What formats do you deliver? <span>+</span></button><div class="faq-a"><p>MP4 (H.264/H.265) at 1080p or 4K. ProRes, MOV on request.</p></div></div>
+        <div class="faq-item"><button class="faq-q">How do I get started? <span>+</span></button><div class="faq-a"><p>WhatsApp or Instagram message with your brief. Quick call, I send a quote, and we get rolling.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Do you work internationally? <span>+</span></button><div class="faq-a"><p>Yes! Files via Google Drive or WeTransfer. Communication via WhatsApp or video call.</p></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ══ CONTACT ══ -->
 <section class="sec" id="contact">
   <div class="con">
     <div class="ct-g">
       <div class="ct-l" data-reveal>
         <span class="sec-tag">Get in Touch</span>
         <h2 class="sec-title">Let's Create<br>Something<br><em>Great</em></h2>
-        <p style="color:rgba(255,255,255,0.55);margin-top:24px;font-size:1.05rem;line-height:1.8;">Have a project in mind? Drop a message and let's bring your vision to life.</p>
+        <p style="color:rgba(255,255,255,.55);margin-top:24px;line-height:1.8;">Have a project in mind? Drop a message and let's bring your vision to life.</p>
         <div class="ch-list">
-          <a href="https://wa.me/91XXXXXXXXXX" class="ch" target="_blank">
+          <a href="https://wa.me/918867629622" class="ch" target="_blank">
             <div class="ch-ic ch-wa"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-            <div><strong>WhatsApp</strong><small>+91 XXXXXXXXXX</small></div>
+            <div><strong>WhatsApp</strong><small>+91 88676 29622</small></div>
           </a>
-          <a href="https://instagram.com/febinlawrance" class="ch" target="_blank">
+          <a href="https://www.instagram.com/febs_law?igsh=MWJqb3UyemFrNnp2bA==" class="ch" target="_blank">
             <div class="ch-ic ch-ig"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div>
-            <div><strong>Instagram</strong><small>@febinlawrance</small></div>
+            <div><strong>Instagram</strong><small>@febs_law</small></div>
           </a>
           <a href="mailto:febin@email.com" class="ch">
             <div class="ch-ic ch-em"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
@@ -494,15 +419,14 @@
           </a>
         </div>
       </div>
-
       <div class="ct-r" data-reveal data-d="150">
         <form class="ct-form" onsubmit="submitForm(event)">
           <div class="cf-row">
             <div class="cf-g"><label>Your Name</label><input type="text" placeholder="Your name" required /></div>
-            <div class="cf-g"><label>Email Address</label><input type="email" placeholder="you@example.com" required /></div>
+            <div class="cf-g"><label>Email</label><input type="email" placeholder="you@example.com" required /></div>
           </div>
-          <div class="cf-g"><label>Project Type</label><input type="text" placeholder="YouTube / Reel / Brand Film / Ad Creative…" /></div>
-          <div class="cf-g"><label>Message</label><textarea rows="5" placeholder="Tell me about your project, timeline, and vision…"></textarea></div>
+          <div class="cf-g"><label>Project Type</label><input type="text" placeholder="YouTube / Reel / Brand Film…" /></div>
+          <div class="cf-g"><label>Message</label><textarea rows="5" placeholder="Tell me about your project…"></textarea></div>
           <button type="submit" class="btn-fill" style="width:100%;justify-content:center;">Send Message →</button>
         </form>
       </div>
@@ -510,25 +434,24 @@
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer class="footer">
   <div class="con">
     <div class="ft-inner">
       <div class="ft-brand"><span class="ft-logo">FL</span><p>© 2026 Febin Lawrence. All rights reserved.</p></div>
       <p class="ft-quote"><em>"Every frame tells a story. I make sure yours is unforgettable."</em></p>
       <div class="ft-links">
-        <a href="https://instagram.com/febinlawrance" target="_blank">Instagram</a>
-        <a href="https://wa.me/91XXXXXXXXXX" target="_blank">WhatsApp</a>
+        <a href="https://www.instagram.com/febs_law?igsh=MWJqb3UyemFrNnp2bA==" target="_blank">Instagram</a>
+        <a href="https://wa.me/918867629622" target="_blank">WhatsApp</a>
         <a href="https://drive.google.com/drive/folders/1KCmJtHAmJlY2gisp5-z4TUaEW-hvulOZ" target="_blank">Portfolio</a>
       </div>
     </div>
   </div>
 </footer>
 
-</main><!-- /dark-zone -->
+</main>
 
 <button class="go-top" id="goTop">↑</button>
-
 <script src="script.js"></script>
 </body>
 </html>
