@@ -1,330 +1,325 @@
 /* ═══════════════════════════════════════════════════════════
-   Febin Lawrence — Portfolio Script
-   - 0.5s delay then avatar voice starts
-   - Voice stops on scroll past hero
-   - Videos autoplay when scrolled into view
-   - Scroll reveal animations
-   - D-ID logo masked via CSS
+   Febin Lawrence Portfolio — script.js v3
+   FIXES:
+   ✅ Voice: unmutes on first user interaction (mousemove/click)
+   ✅ Scroll reveal: IntersectionObserver on [data-reveal]
+   ✅ Videos: autoplay when scrolled into view
+   ✅ 3D tilt on cards
+   ✅ Counter animation
+   ✅ Skill bars animate on scroll
+   ✅ Nav dark-switch when entering dark zone
+   ✅ FAQ accordion
+   ✅ Upload zones
 ═══════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  /* ──────────────────────────────────────
-     LOADER
-  ────────────────────────────────────── */
+  /* ─── 1. PAGE LOADER ─────────────────────────────── */
   const loader = document.getElementById('pageLoader');
-
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      loader.classList.add('done');
-    }, 2000);
+    setTimeout(() => loader.classList.add('done'), 1800);
   });
 
-  /* ──────────────────────────────────────
-     CUSTOM CURSOR
-  ────────────────────────────────────── */
-  const cursor = document.getElementById('cursor');
+  /* ─── 2. CUSTOM CURSOR ───────────────────────────── */
+  const cur  = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
 
-  let cx = 0, cy = 0;
-  let rx = 0, ry = 0;
+  let mx = 0, my = 0, rx = 0, ry = 0;
 
-  document.addEventListener('mousemove', (e) => {
-    cx = e.clientX; cy = e.clientY;
-    cursor.style.left = cx + 'px';
-    cursor.style.top = cy + 'px';
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left  = mx + 'px';
+    cur.style.top   = my + 'px';
   });
 
-  // Smooth ring follow
-  function animateRing() {
-    rx += (cx - rx) * 0.14;
-    ry += (cy - ry) * 0.14;
+  // smooth ring follow
+  (function followRing() {
+    rx += (mx - rx) * 0.13;
+    ry += (my - ry) * 0.13;
     ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(followRing);
+  })();
 
-  document.querySelectorAll('a, button, .vcard-screen, .svc-row, .testi-card, .faq-q, .ch-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('big');
-      ring.classList.add('big');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('big');
-      ring.classList.remove('big');
-    });
+  // hover scale on interactive elements
+  document.querySelectorAll('a, button, .vc-screen, .svc-row, .test-c, .faq-q, .ch, .sk-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cur.classList.add('big'); ring.classList.add('big'); });
+    el.addEventListener('mouseleave', () => { cur.classList.remove('big'); ring.classList.remove('big'); });
   });
 
-  /* ──────────────────────────────────────
-     FLOATING PARTICLES IN HERO
-  ────────────────────────────────────── */
-  const particlesContainer = document.getElementById('heroParticles');
-  if (particlesContainer) {
-    for (let i = 0; i < 20; i++) {
-      const p = document.createElement('div');
-      p.className = 'hp';
-      p.style.setProperty('--dur', (6 + Math.random() * 8) + 's');
-      p.style.setProperty('--delay', (Math.random() * 6) + 's');
-      p.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
-      p.style.left = (Math.random() * 100) + '%';
-      p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
-      particlesContainer.appendChild(p);
-    }
+  /* ─── 3. AVATAR VOICE ────────────────────────────────
+     Browser blocks autoplay audio by default.
+     Strategy: start muted, unmute on FIRST user interaction.
+     Also: mute when scrolled past hero, unmute when back.
+  ─────────────────────────────────────────────────────── */
+  const avatarVid  = document.getElementById('avatarVid');
+  const soundBtn   = document.getElementById('soundBtn');
+  const icMuted    = document.getElementById('icMuted');
+  const icSound    = document.getElementById('icSound');
+  const soundLabel = document.getElementById('soundLabel');
+  const heroSection = document.getElementById('hero');
+
+  let voiceUnlocked = false;   // has user interacted yet?
+  let voiceMuted    = false;   // user manually muted?
+  let heroVisible   = true;
+
+  function enableVoice() {
+    if (!avatarVid) return;
+    avatarVid.muted  = false;
+    avatarVid.volume = 0.85;
+    icMuted.style.display  = 'none';
+    icSound.style.display  = 'block';
+    soundLabel.textContent = 'Mute';
+    soundBtn.classList.add('active');
+    voiceUnlocked = true;
   }
 
-  /* ──────────────────────────────────────
-     AVATAR VIDEO — 0.5s DELAY START, MUTED
-     Voice auto-unmutes after 0.5s
-     Voice mutes when hero leaves viewport
-  ────────────────────────────────────── */
-  const avatarVideo = document.getElementById('avatarVideo');
-  let heroVoiceEnabled = false;
-  let heroLeft = false;
+  function muteVoice() {
+    if (!avatarVid) return;
+    avatarVid.muted = true;
+    icMuted.style.display  = 'block';
+    icSound.style.display  = 'none';
+    soundLabel.textContent = 'Click to hear me';
+    soundBtn.classList.remove('active');
+  }
 
-  if (avatarVideo) {
-    // Start muted (browser policy)
-    avatarVideo.muted = true;
-    avatarVideo.volume = 0.85;
-
-    // After 0.5s from load, unmute — give voice to avatar
+  // Unlock on FIRST interaction (mousemove counts on desktop)
+  function firstInteraction() {
+    if (voiceUnlocked || voiceMuted) return;
+    // small delay so page has properly loaded
     setTimeout(() => {
-      if (!heroLeft) {
-        avatarVideo.muted = false;
-        heroVoiceEnabled = true;
-      }
+      if (!voiceMuted && heroVisible) enableVoice();
     }, 500);
+    document.removeEventListener('mousemove', firstInteraction);
+    document.removeEventListener('click',     firstInteraction);
+    document.removeEventListener('touchstart',firstInteraction);
+    document.removeEventListener('keydown',   firstInteraction);
+  }
 
-    // When user scrolls past hero → mute avatar
-    const heroSection = document.getElementById('hero');
+  document.addEventListener('mousemove',  firstInteraction, { once: false });
+  document.addEventListener('click',      firstInteraction, { once: false });
+  document.addEventListener('touchstart', firstInteraction, { once: false });
+  document.addEventListener('keydown',    firstInteraction, { once: false });
 
-    const heroObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-          // Scrolled away from hero → mute
-          avatarVideo.muted = true;
-          heroLeft = true;
+  // Sound button — manual toggle
+  if (soundBtn) {
+    soundBtn.addEventListener('click', () => {
+      if (!voiceUnlocked) {
+        enableVoice();
+        voiceMuted = false;
+      } else if (!avatarVid.muted) {
+        muteVoice();
+        voiceMuted = true;
+      } else {
+        enableVoice();
+        voiceMuted = false;
+      }
+    });
+  }
+
+  // Mute when hero scrolls out of view, restore when back
+  if (heroSection && avatarVid) {
+    const heroObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        heroVisible = e.isIntersecting;
+        if (!e.isIntersecting) {
+          // left hero → mute
+          avatarVid.muted = true;
         } else {
-          // Back to hero → unmute if voice was enabled
-          heroLeft = false;
-          if (heroVoiceEnabled) {
-            setTimeout(() => {
-              if (!heroLeft) avatarVideo.muted = false;
-            }, 200);
+          // back to hero → restore if not manually muted
+          if (voiceUnlocked && !voiceMuted) {
+            setTimeout(() => { if (heroVisible) avatarVid.muted = false; }, 200);
           }
         }
       });
-    }, { threshold: 0.1 });
-
-    if (heroSection) heroObserver.observe(heroSection);
+    }, { threshold: 0.15 });
+    heroObs.observe(heroSection);
   }
 
-  /* ──────────────────────────────────────
-     NAV — scroll effects + dark-mode switch
-  ────────────────────────────────────── */
-  const nav = document.getElementById('nav');
-  const darkZone = document.querySelector('.dark-zone');
-  const goTop = document.getElementById('goTop');
+  /* ─── 4. NAV SCROLL EFFECTS ─────────────────────── */
+  const nav      = document.getElementById('nav');
+  const darkZone = document.getElementById('darkZone');
+  const goTop    = document.getElementById('goTop');
 
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
+    const sy = window.scrollY;
 
-    // scrolled class
-    nav.classList.toggle('scrolled', scrollY > 60);
+    // solid bg after 60px
+    nav.classList.toggle('solid', sy > 60);
 
-    // dark nav when inside dark zone
+    // dark-nav when dark zone starts
     if (darkZone) {
       const dzTop = darkZone.getBoundingClientRect().top;
-      nav.classList.toggle('dark-nav', dzTop <= 60);
+      nav.classList.toggle('dark-nav', dzTop <= 64);
     }
 
-    // go top button
-    goTop.classList.toggle('show', scrollY > 600);
-  });
+    // go-top button
+    goTop.classList.toggle('show', sy > 600);
+  }, { passive: true });
 
-  goTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  goTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  /* ──────────────────────────────────────
-     MOBILE NAV
-  ────────────────────────────────────── */
-  const burger = document.getElementById('navBurger');
-  const drawer = document.getElementById('mobileDrawer');
-  let menuOpen = false;
+  /* ─── 5. MOBILE NAV ─────────────────────────────── */
+  const burger   = document.getElementById('navBurger');
+  const mobileNv = document.getElementById('mobileNav');
+  const mnClose  = document.getElementById('mnClose');
+  let menuOpen   = false;
 
-  burger.addEventListener('click', () => {
-    menuOpen = !menuOpen;
-    drawer.classList.toggle('open', menuOpen);
-    const spans = burger.querySelectorAll('span');
-    spans[0].style.transform = menuOpen ? 'rotate(45deg) translate(5px, 5px)' : '';
-    spans[1].style.transform = menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : '';
-  });
+  function openMenu()  { menuOpen = true;  mobileNv.classList.add('open');    animBurger(true);  }
+  function closeMenu() { menuOpen = false; mobileNv.classList.remove('open'); animBurger(false); }
 
-  document.querySelectorAll('.md-link').forEach(l => {
-    l.addEventListener('click', () => {
-      menuOpen = false;
-      drawer.classList.remove('open');
-      burger.querySelectorAll('span').forEach(s => { s.style.transform = ''; });
-    });
-  });
+  function animBurger(open) {
+    const [s0, s1] = burger.querySelectorAll('span');
+    s0.style.transform = open ? 'rotate(45deg) translate(5px,5px)'   : '';
+    s1.style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+  }
 
-  /* ──────────────────────────────────────
-     SCROLL REVEAL — [data-reveal]
-  ────────────────────────────────────── */
+  burger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+  if (mnClose) mnClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mn-lnk').forEach(l => l.addEventListener('click', closeMenu));
+
+  /* ─── 6. SCROLL REVEAL ──────────────────────────────
+     Watches [data-reveal] elements.
+     Adds class 'visible' when in viewport.
+  ─────────────────────────────────────────────────────── */
   const revealEls = document.querySelectorAll('[data-reveal]');
 
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        revealObserver.unobserve(entry.target);
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revObs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
 
-  revealEls.forEach(el => revealObserver.observe(el));
+  revealEls.forEach(el => revObs.observe(el));
 
-  /* ──────────────────────────────────────
-     SKILL BARS — animate on scroll
-  ────────────────────────────────────── */
-  const skillFills = document.querySelectorAll('.sk3-fill');
+  /* ─── 7. SKILL BAR ANIMATION ────────────────────── */
+  const skillFills = document.querySelectorAll('.sk-fill');
 
-  const skillObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const w = entry.target.dataset.w;
-        entry.target.style.width = w + '%';
-        skillObserver.unobserve(entry.target);
+  const skillObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.dataset.w + '%';
+        skillObs.unobserve(e.target);
       }
     });
   }, { threshold: 0.3 });
 
-  skillFills.forEach(b => skillObserver.observe(b));
+  skillFills.forEach(f => skillObs.observe(f));
 
-  /* ──────────────────────────────────────
-     COUNTER ANIMATION — stats
-  ────────────────────────────────────── */
+  /* ─── 8. COUNTER ANIMATION ──────────────────────── */
   const counters = document.querySelectorAll('[data-count]');
 
-  const countObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el     = e.target;
         const target = parseInt(el.dataset.count);
-        const dur = 1600;
-        const start = performance.now();
+        const dur    = 1600;
+        const t0     = performance.now();
 
-        const run = (now) => {
-          const p = Math.min((now - start) / dur, 1);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.floor(eased * target);
-          if (p < 1) requestAnimationFrame(run);
-          else el.textContent = target;
+        const tick = now => {
+          const p    = Math.min((now - t0) / dur, 1);
+          const ease = 1 - Math.pow(1 - p, 3); // ease-out-cubic
+          el.textContent = Math.floor(ease * target);
+          if (p < 1) requestAnimationFrame(tick);
+          else        el.textContent = target;
         };
-
-        requestAnimationFrame(run);
-        countObserver.unobserve(el);
+        requestAnimationFrame(tick);
+        countObs.unobserve(el);
       }
     });
   }, { threshold: 0.5 });
 
-  counters.forEach(c => countObserver.observe(c));
+  counters.forEach(c => countObs.observe(c));
 
-  /* ──────────────────────────────────────
-     VIDEO GRID — AUTO-PLAY ON SCROLL IN
-     All videos play automatically when visible
-     Pause when out of view
-  ────────────────────────────────────── */
-  const gridVideos = document.querySelectorAll('.grid-vid[data-autoplay]');
+  /* ─── 9. VIDEO GRID — AUTO-PLAY ON SCROLL ─────────
+     Videos with [data-ap] autoplay when 25% visible.
+     They pause when out of view (saves resources).
+  ─────────────────────────────────────────────────────── */
+  const gridVids = document.querySelectorAll('.gv[data-ap]');
 
-  const videoObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const vid = entry.target;
-      if (entry.isIntersecting) {
-        // Only play if src is loaded
-        if (vid.src && vid.src !== window.location.href) {
-          vid.play().catch(() => { /* ignore autoplay errors */ });
-        }
+  const vidObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) {
+        // attempt play; gracefully catch blocked promise
+        v.play().catch(() => {});
       } else {
-        vid.pause();
+        v.pause();
       }
     });
   }, { threshold: 0.25 });
 
-  gridVideos.forEach(v => videoObserver.observe(v));
+  gridVids.forEach(v => vidObs.observe(v));
 
-  /* ──────────────────────────────────────
-     3D TILT EFFECT ON CARDS
-  ────────────────────────────────────── */
-  document.querySelectorAll('.vcard-screen, .sk3-card, .testi-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
+  /* ─── 10. 3D TILT ON CARDS ──────────────────────── */
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-6px)`;
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-6px) scale(1.02)`;
     });
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
     });
   });
 
-  /* ──────────────────────────────────────
-     FAQ ACCORDION
-  ────────────────────────────────────── */
+  /* ─── 11. FAQ ACCORDION ─────────────────────────── */
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.parentElement;
-      const answer = item.querySelector('.faq-a');
-      const isOpen = item.classList.contains('open');
+      const ans  = item.querySelector('.faq-a');
+      const open = item.classList.contains('open');
 
-      // Close all
+      // close all
       document.querySelectorAll('.faq-item').forEach(fi => {
         fi.classList.remove('open');
         fi.querySelector('.faq-a').style.maxHeight = null;
       });
 
-      if (!isOpen) {
+      if (!open) {
         item.classList.add('open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
+        ans.style.maxHeight = ans.scrollHeight + 'px';
       }
     });
   });
 
-  /* ──────────────────────────────────────
-     VIDEO UPLOAD SLOTS
-  ────────────────────────────────────── */
+  /* ─── 12. VIDEO UPLOAD ZONES ────────────────────── */
   document.querySelectorAll('.upload-zone').forEach(zone => {
-    const prompt = zone.querySelector('.uz-prompt');
-    const input = zone.querySelector('.uz-input');
-    const preview = zone.querySelector('.uz-preview');
-
+    const prompt  = zone.querySelector('.uz-prompt');
+    const input   = zone.querySelector('.uz-input');
+    const preview = zone.querySelector('.uz-prev');
     if (!prompt || !input || !preview) return;
 
     prompt.addEventListener('click', () => input.click());
 
-    input.addEventListener('change', (e) => {
+    input.addEventListener('change', e => {
       const file = e.target.files[0];
       if (!file) return;
       const url = URL.createObjectURL(file);
       preview.src = url;
       preview.style.display = 'block';
-      preview.muted = false;
+      preview.muted  = false;
       preview.volume = 0.85;
       preview.play().catch(() => {});
       prompt.style.display = 'none';
+
+      // also observe for autoplay
+      vidObs.observe(preview);
     });
   });
 
-  /* ──────────────────────────────────────
-     CONTACT FORM
-  ────────────────────────────────────── */
-  window.handleSubmit = function (e) {
+  /* ─── 13. CONTACT FORM ──────────────────────────── */
+  window.submitForm = function(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
+    const btn  = e.target.querySelector('button[type="submit"]');
     const orig = btn.textContent;
-    btn.textContent = 'Message Sent! ✓';
+    btn.textContent = '✓ Message Sent!';
     btn.style.background = '#22c55e';
     btn.style.color = '#fff';
     setTimeout(() => {
@@ -335,36 +330,51 @@
     }, 3000);
   };
 
-  /* ──────────────────────────────────────
-     SMOOTH NAV ANCHOR SCROLLING
-  ────────────────────────────────────── */
+  /* ─── 14. SMOOTH ANCHOR SCROLL ──────────────────── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      const el = document.querySelector(id);
+      if (el) {
         e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
 
-  /* ──────────────────────────────────────
-     SURPRISE SCROLL EFFECTS (dark zone)
-     Parallax float on section titles
-  ────────────────────────────────────── */
-  const sectionTitles = document.querySelectorAll('.section-title');
+  /* ─── 15. MARQUEE PAUSE ON HOVER ────────────────── */
+  const track = document.getElementById('marqueeTrack');
+  if (track) {
+    track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+    track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+  }
+
+  /* ─── 16. SECTION TITLE PARALLAX (dark zone) ─── */
+  const secTitles = document.querySelectorAll('.dark-zone .sec-title');
 
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-
-    sectionTitles.forEach(title => {
-      const rect = title.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-        const offset = (progress - 0.5) * -30;
-        title.style.transform = `translateY(${offset}px)`;
+    secTitles.forEach(t => {
+      const r = t.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        const prog   = (window.innerHeight - r.top) / (window.innerHeight + r.height);
+        const offset = (prog - 0.5) * -20;
+        t.style.transform = `translateY(${offset}px)`;
       }
     });
-  });
+  }, { passive: true });
 
-})();
+  /* ─── 17. SURPRISE ENTRANCE — dark zone sections ─
+     Extra pop effect when first entering each dark section
+  ─────────────────────────────────────────────────────── */
+  const darkSecs = document.querySelectorAll('.dark-zone .sec');
+  const secEntryObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.setProperty('--entry', '1');
+        secEntryObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  darkSecs.forEach(s => secEntryObs.observe(s));
+
+})(); // end IIFE
