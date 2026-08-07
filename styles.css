@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
    Febin Lawrence — Video Editor Portfolio v3
-   Hero: WHITE BG, Avatar fills entire right side (no box)
+   Hero: WHITE BG, Avatar fills right side shifted LEFT
+   D-ID watermark: contrast filter + white overlay = hidden
    Dark zone: 3D effects, scroll reveal
 ═══════════════════════════════════════════════════════════ */
 
@@ -241,48 +242,50 @@ em { font-style: italic; color: var(--acc); }
 .sound-btn:hover { border-color: var(--dark); background: var(--dark); color: var(--white); transform: translateY(-2px); }
 .sound-btn.active { border-color: var(--acc); background: rgba(200,169,110,.1); color: var(--dark); }
 
-/* ── HERO RIGHT — AVATAR FULL BLEED ── */
+/* ── HERO RIGHT — AVATAR, SHIFTED LEFT ── */
 .hero-right {
   position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 50%;
+  /* Shift left: start at 38% so avatar appears more centered */
+  left: 38%;
+  top: 0; bottom: 0;
+  width: 66%;          /* extends past right edge, overflow hidden */
   overflow: hidden;
   z-index: 5;
 }
 
-/* Video fills entire right panel */
+/* Video fills the panel */
 #avatarVid {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: 30% top;   /* pull video content leftward */
+  /* Contrast boost: pushes D-ID gray watermarks → near white */
+  filter: contrast(2.2) brightness(1.06);
 }
 
 /* ── D-ID WATERMARK KILLER ──
-   The D-ID generated video has a white bg with repeated 'D-iD' text pattern.
-   We use a screen-mode overlay matching the watermark color to suppress it.
-   Then we add a subtle white tint layer. */
+   After contrast(2.2): gray D-ID text ≈ 175 → becomes ~240 (near white)
+   This white overlay then pushes it to fully invisible */
 .did-killer {
   position: absolute; inset: 0; z-index: 2;
-  background: rgba(220,220,220,.18);  /* suppresses the light gray D-ID pattern */
-  mix-blend-mode: screen;
+  background: rgba(255, 255, 255, 0.32);
   pointer-events: none;
 }
 
-/* Left-edge gradient fade so avatar blends into white hero bg naturally */
+/* Left-edge gradient: avatar blends smoothly into white bg */
 .hr-fade-left {
   position: absolute; top: 0; left: 0; bottom: 0;
-  width: 120px; z-index: 3;
-  background: linear-gradient(90deg, var(--white) 0%, transparent 100%);
+  width: 160px; z-index: 3;
+  background: linear-gradient(90deg, var(--white) 15%, rgba(255,255,255,.4) 60%, transparent 100%);
   pointer-events: none;
 }
 
-/* Bottom gradient — hides D-ID footer logo */
+/* Bottom gradient — covers D-ID footer logo completely */
 .hr-fade-bottom {
   position: absolute; bottom: 0; left: 0; right: 0;
-  height: 100px; z-index: 3;
-  background: linear-gradient(transparent, var(--white) 80%);
+  height: 120px; z-index: 3;
+  background: linear-gradient(transparent, rgba(255,255,255,.85) 60%, var(--white) 100%);
   pointer-events: none;
 }
 
@@ -414,10 +417,28 @@ em { font-style: italic; color: var(--acc); }
 
 .vc-placeholder {
   position:absolute; inset:0; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:12px;
+  align-items:center; justify-content:center; gap:14px;
+  background: var(--vc-bg, linear-gradient(135deg, #1a1a2e, #16213e));
 }
-.vc-placeholder span { font-size:40px; }
-.vc-placeholder p { font-size:14px; color:rgba(255,255,255,.3); font-weight:500; }
+.vc-placeholder .vc-play {
+  width:60px; height:60px; border-radius:50%;
+  background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px;
+  transition: background .3s, transform .3s;
+}
+.vc-screen:hover .vc-play { background:rgba(200,169,110,.3); transform:scale(1.1); }
+.vc-placeholder span { font-size:28px; }
+.vc-placeholder p { font-size:13px; color:rgba(255,255,255,.5); font-weight:600; letter-spacing:1px; }
+.vc-placeholder .vc-drive-link {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+  border-radius:100px; padding:7px 14px;
+  font-size:11px; font-weight:700; color:rgba(255,255,255,.7);
+  letter-spacing:.5px;
+  transition:background .3s, color .3s;
+}
+.vc-placeholder .vc-drive-link:hover { background:rgba(200,169,110,.25); color:#fff; }
 
 .vc-ov {
   position:absolute; inset:0;
