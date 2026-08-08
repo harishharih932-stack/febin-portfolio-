@@ -264,24 +264,9 @@
         <p>Professional color grading, LUT work, node-based color science.</p>
       </div>
       <div class="sk-card" data-reveal data-d="160" data-tilt>
-        <div class="sk-ico" style="--h:320">Ae</div><h4>After Effects</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="85"></div></div><span class="sk-pct">85%</span>
-        <p>Motion graphics, kinetic typography, logo reveals &amp; animations.</p>
-      </div>
-      <div class="sk-card" data-reveal data-d="240" data-tilt>
         <div class="sk-ico" style="--h:180">Cc</div><h4>CapCut Pro</h4>
         <div class="sk-bar"><div class="sk-fill" data-w="92"></div></div><span class="sk-pct">92%</span>
         <p>Fast-paced reels, trending transitions &amp; mobile-first short content.</p>
-      </div>
-      <div class="sk-card" data-reveal data-d="320" data-tilt>
-        <div class="sk-ico" style="--h:120">Au</div><h4>Adobe Audition</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="75"></div></div><span class="sk-pct">75%</span>
-        <p>Audio cleanup, noise removal, music sync &amp; SFX layering.</p>
-      </div>
-      <div class="sk-card" data-reveal data-d="400" data-tilt>
-        <div class="sk-ico" style="--h:220">Ps</div><h4>Photoshop</h4>
-        <div class="sk-bar"><div class="sk-fill" data-w="80"></div></div><span class="sk-pct">80%</span>
-        <p>Thumbnail design, frame compositing &amp; visual assets creation.</p>
       </div>
     </div>
   </div>
@@ -309,13 +294,13 @@
 <div class="stats-band" data-reveal>
   <div class="con">
     <div class="stats-row">
-      <div class="stat"><strong class="sn" data-count="30">0</strong><span>+</span><p>Happy Clients</p></div>
+      <div class="stat"><div class="stat-inline"><strong class="sn" data-count="30">0</strong><span>+</span></div><p>Happy Clients</p></div>
       <div class="stat-sep"></div>
-      <div class="stat"><strong class="sn" data-count="1">0</strong><span> yr</span><p>Experience</p></div>
+      <div class="stat"><div class="stat-inline"><strong class="sn" data-count="500">0</strong><span>K+</span></div><p>Views Generated</p></div>
       <div class="stat-sep"></div>
-      <div class="stat"><strong class="sn" data-count="3">0</strong><span></span><p>Business Days Delivery</p></div>
+      <div class="stat"><div class="stat-inline"><strong class="sn" data-count="1">0</strong><span> yr</span></div><p>Experience</p></div>
       <div class="stat-sep"></div>
-      <div class="stat"><strong class="sn" data-count="100">0</strong><span>%</span><p>Satisfaction</p></div>
+      <div class="stat"><div class="stat-inline"><strong class="sn" data-count="100">0</strong><span>%</span></div><p>Satisfaction</p></div>
     </div>
   </div>
 </div>
@@ -362,7 +347,7 @@
         <a href="#contact" class="btn-fill" style="margin-top:28px;display:inline-flex;">Ask a Question</a>
       </div>
       <div class="faq-r" data-reveal data-d="150">
-        <div class="faq-item"><button class="faq-q">What's your turnaround time? <span>+</span></button><div class="faq-a"><p>Most projects delivered within 1–3 business days. Rush delivery available.</p></div></div>
+        <div class="faq-item"><button class="faq-q">What's your turnaround time? <span>+</span></button><div class="faq-a"><p>Most projects delivered within 2–3 business days. Rush delivery available.</p></div></div>
         <div class="faq-item"><button class="faq-q">How many revisions do I get? <span>+</span></button><div class="faq-a"><p>Every project includes 2 rounds of revisions. Additional rounds can be arranged.</p></div></div>
         <div class="faq-item"><button class="faq-q">What formats do you deliver? <span>+</span></button><div class="faq-a"><p>MP4 (H.264/H.265) at 1080p or 4K. ProRes, MOV on request.</p></div></div>
         <div class="faq-item"><button class="faq-q">How do I get started? <span>+</span></button><div class="faq-a"><p>WhatsApp or Instagram message with your brief. Quick call, I send a quote, and we get rolling.</p></div></div>
@@ -396,24 +381,30 @@
         </div>
       </div>
       <div class="ct-r" data-reveal data-d="150">
-        <form class="ct-form" id="contactForm" onsubmit="submitForm(event)">
-          <div class="cf-row">
-            <div class="cf-g"><label>Your Name</label><input type="text" id="cf-name" placeholder="Your name" required /></div>
-            <div class="cf-g"><label>Email</label><input type="email" id="cf-email" placeholder="you@example.com" required /></div>
+        <!-- Telegram Chat Box -->
+        <div class="tg-chat-box">
+          <div class="tg-chat-header">
+            <div class="tg-avatar">FL</div>
+            <div>
+              <strong>Febin Lawrence</strong>
+              <span class="tg-online">● Online</span>
+            </div>
           </div>
-          <div class="cf-g"><label>Project Type</label><input type="text" id="cf-project" placeholder="YouTube / Reel / Brand Film…" /></div>
-          <div class="cf-g"><label>Message</label><textarea rows="4" id="cf-msg" placeholder="Tell me about your project…"></textarea></div>
-          <div class="cf-g">
-            <label>Attach Photo or Video <span style="color:rgba(255,255,255,0.4);font-size:12px;">(optional — max 10s video / any photo)</span></label>
-            <label class="cf-file-label" for="cf-file">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span id="cf-file-name">Choose file…</span>
+          <div class="tg-messages" id="tgMessages">
+            <div class="tg-msg tg-msg-in">Hey! 👋 Drop your message, photo or video below. I'll get back to you soon!</div>
+          </div>
+          <form class="tg-input-row" id="tgForm" onsubmit="sendTelegram(event)">
+            <label class="tg-attach" for="tg-file" title="Attach photo or video">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             </label>
-            <input type="file" id="cf-file" accept="image/*,video/*" style="display:none" onchange="updateFileName(this)" />
-          </div>
-          <button type="submit" class="btn-fill" style="width:100%;justify-content:center;" id="cf-submit">Send Message →</button>
-          <p id="cf-status" style="text-align:center;margin-top:12px;font-size:14px;display:none;"></p>
-        </form>
+            <input type="file" id="tg-file" accept="image/*,video/*" style="display:none" onchange="tgFilePreview(this)">
+            <input type="text" id="tg-msg" class="tg-input" placeholder="Type a message…" autocomplete="off" required />
+            <button type="submit" class="tg-send">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </form>
+          <div id="tg-file-preview" style="display:none;padding:6px 16px;font-size:12px;color:var(--acc);"></div>
+        </div>
       </div>
     </div>
   </div>

@@ -200,67 +200,65 @@
     });
   }
 
-  /* ─── CONTACT FORM → TELEGRAM BOT ─── */
+  /* ─── TELEGRAM CHAT BOT ─── */
   const TG_TOKEN = '8833102069:AAGAfVFAzizuQhwjYf8njU7LRSWW1HAs7uo';
   const TG_CHAT  = '5388147485';
   const TG_API   = `https://api.telegram.org/bot${TG_TOKEN}`;
+  let tgPendingFile = null;
 
-  window.updateFileName = function(input) {
-    const label = document.getElementById('cf-file-name');
-    if (label) label.textContent = input.files[0] ? input.files[0].name : 'Choose file…';
+  window.tgFilePreview = function(input) {
+    tgPendingFile = input.files[0] || null;
+    const prev = document.getElementById('tg-file-preview');
+    if (prev) { prev.style.display = tgPendingFile ? 'block' : 'none'; prev.textContent = tgPendingFile ? `📎 ${tgPendingFile.name}` : ''; }
   };
 
-  window.submitForm = async function(e) {
+  function addTgMsg(text, isOut) {
+    const box = document.getElementById('tgMessages');
+    if (!box) return;
+    const d = document.createElement('div');
+    d.className = 'tg-msg ' + (isOut ? 'tg-msg-out' : 'tg-msg-in');
+    d.textContent = text;
+    box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  window.sendTelegram = async function(e) {
     e.preventDefault();
-    const btn    = document.getElementById('cf-submit');
-    const status = document.getElementById('cf-status');
-    const name   = (document.getElementById('cf-name')?.value || '').trim();
-    const email  = (document.getElementById('cf-email')?.value || '').trim();
-    const project= (document.getElementById('cf-project')?.value || '').trim();
-    const msg    = (document.getElementById('cf-msg')?.value || '').trim();
-    const fileEl = document.getElementById('cf-file');
-    const file   = fileEl?.files[0];
+    const msgEl  = document.getElementById('tg-msg');
+    const sendBtn = e.target.querySelector('.tg-send');
+    const msg = (msgEl?.value || '').trim();
+    if (!msg && !tgPendingFile) return;
 
-    btn.textContent = 'Sending…'; btn.disabled = true;
-    status.style.display = 'none';
+    addTgMsg(msg || (tgPendingFile ? `📎 ${tgPendingFile.name}` : ''), true);
+    msgEl.value = '';
+    sendBtn.disabled = true;
 
-    const text = [
-      '📩 *New Portfolio Message*',
-      `👤 *Name:* ${name}`,
-      `📧 *Email:* ${email}`,
-      project ? `🎬 *Project:* ${project}` : '',
-      msg ? `💬 *Message:* ${msg}` : '',
-    ].filter(Boolean).join('\n');
-
+    const text = `📬 *New Message via Portfolio*\n💬 ${msg}`;
     try {
-      // Send text message
-      await fetch(`${TG_API}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'Markdown' })
-      });
-
-      // Send file if attached
-      if (file) {
+      if (msg) {
+        await fetch(`${TG_API}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'Markdown' })
+        });
+      }
+      if (tgPendingFile) {
         const fd = new FormData();
         fd.append('chat_id', TG_CHAT);
-        const isVideo = file.type.startsWith('video/');
-        fd.append(isVideo ? 'video' : 'photo', file);
-        fd.append('caption', `📂 File from: ${name}`);
-        await fetch(`${TG_API}/send${isVideo ? 'Video' : 'Photo'}`, { method: 'POST', body: fd });
+        const isVid = tgPendingFile.type.startsWith('video/');
+        fd.append(isVid ? 'video' : 'photo', tgPendingFile);
+        if (msg) fd.append('caption', msg);
+        await fetch(`${TG_API}/send${isVid ? 'Video' : 'Photo'}`, { method: 'POST', body: fd });
+        tgPendingFile = null;
+        const prev = document.getElementById('tg-file-preview');
+        if (prev) { prev.style.display = 'none'; }
+        document.getElementById('tg-file').value = '';
       }
-
-      btn.textContent = '✓ Sent!'; btn.style.background = '#22c55e';
-      status.textContent = '🎉 Message delivered to Febin!';
-      status.style.color = '#22c55e'; status.style.display = 'block';
-      e.target.reset();
-      if (document.getElementById('cf-file-name')) document.getElementById('cf-file-name').textContent = 'Choose file…';
-      setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; btn.disabled = false; status.style.display = 'none'; }, 4000);
+      setTimeout(() => addTgMsg('✅ Got it! I’ll reply soon on WhatsApp or Instagram.', false), 800);
     } catch(err) {
-      btn.textContent = 'Send Message →'; btn.disabled = false;
-      status.textContent = '❌ Failed to send. Try WhatsApp!';
-      status.style.color = '#ef4444'; status.style.display = 'block';
+      addTgMsg('❌ Failed to send. Try WhatsApp instead!', false);
     }
+    sendBtn.disabled = false;
   };
 
   /* ─── SMOOTH ANCHOR ─── */
