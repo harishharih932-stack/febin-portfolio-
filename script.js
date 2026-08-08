@@ -7,36 +7,36 @@
   const avatarVid  = document.getElementById('avatarVid');
   const heroSec    = document.getElementById('hero');
   let loaderDone = false;
-  let voiceMuted = false;
-  let voiceOn = true;
+  let voiceMuted = true;
+  let voiceOn = false;
   let heroVis = true;
 
-  function forceUnmute() {
-    if (!avatarVid) return;
-    avatarVid.muted = false;
-    avatarVid.volume = 1.0;
-    avatarVid.play().catch(() => {
-      // If browser blocks unmuted playback initially without gesture
-      avatarVid.muted = true;
-      avatarVid.play();
-    });
-    voiceOn = true;
-    voiceMuted = false;
+  // Keep muted during preloader
+  if (avatarVid) {
+    avatarVid.muted = true;
   }
 
-  // Try unmuting immediately when video metadata is ready
-  if (avatarVid) {
+  function forceUnmute() {
+    if (!avatarVid || !loaderDone) return;
     avatarVid.muted = false;
     avatarVid.volume = 1.0;
-    avatarVid.addEventListener('loadedmetadata', forceUnmute);
-    avatarVid.addEventListener('canplay', forceUnmute);
+    avatarVid.play().catch(() => {});
+    voiceOn = true;
+    voiceMuted = false;
   }
 
   window.addEventListener('load', () => {
     setTimeout(() => {
       loader.classList.add('done');
       loaderDone = true;
-      forceUnmute();
+      
+      // Wait 2 seconds AFTER loader is completely finished before unmuting voice & playing from start
+      setTimeout(() => {
+        if (avatarVid) {
+          avatarVid.currentTime = 0;
+          forceUnmute();
+        }
+      }, 2000);
     }, 1800);
   });
 
@@ -61,9 +61,10 @@
     voiceMuted = true;
   }
   
-  // Unmute on ANY user gesture or mouse movement immediately
+  // Fallback unlock on user gesture (only after loader is done)
   const unlockEvents = ['mousemove', 'mousedown', 'mouseup', 'click', 'touchstart', 'touchend', 'keydown', 'scroll', 'pointermove'];
   function unlockAudio() {
+    if (!loaderDone) return;
     forceUnmute();
     unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio));
   }
