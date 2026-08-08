@@ -11,19 +11,32 @@
   let voiceOn = true;
   let heroVis = true;
 
+  function forceUnmute() {
+    if (!avatarVid) return;
+    avatarVid.muted = false;
+    avatarVid.volume = 1.0;
+    avatarVid.play().catch(() => {
+      // If browser blocks unmuted playback initially without gesture
+      avatarVid.muted = true;
+      avatarVid.play();
+    });
+    voiceOn = true;
+    voiceMuted = false;
+  }
+
+  // Try unmuting immediately when video metadata is ready
+  if (avatarVid) {
+    avatarVid.muted = false;
+    avatarVid.volume = 1.0;
+    avatarVid.addEventListener('loadedmetadata', forceUnmute);
+    avatarVid.addEventListener('canplay', forceUnmute);
+  }
+
   window.addEventListener('load', () => {
     setTimeout(() => {
       loader.classList.add('done');
       loaderDone = true;
-      if (avatarVid) {
-        avatarVid.muted = false;
-        avatarVid.volume = 1.0;
-        avatarVid.play().catch(() => {
-          // If browser policy blocks unmuted autoplay, play muted first then unmute on user touch
-          avatarVid.muted = true;
-          avatarVid.play();
-        });
-      }
+      forceUnmute();
     }, 1800);
   });
 
@@ -39,12 +52,7 @@
   });
 
   function enableVoice() {
-    if (!avatarVid) return;
-    avatarVid.muted = false;
-    avatarVid.volume = 1.0;
-    avatarVid.play().catch(() => {});
-    voiceOn = true;
-    voiceMuted = false;
+    forceUnmute();
   }
   function muteVoice() {
     if (!avatarVid) return;
@@ -52,16 +60,20 @@
     voiceOn = false;
     voiceMuted = true;
   }
-  function firstInteraction() {
-    enableVoice();
-    ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.removeEventListener(e, firstInteraction));
+  
+  // Unmute on ANY user gesture or mouse movement immediately
+  const unlockEvents = ['mousemove', 'mousedown', 'mouseup', 'click', 'touchstart', 'touchend', 'keydown', 'scroll', 'pointermove'];
+  function unlockAudio() {
+    forceUnmute();
+    unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio));
   }
-  ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.addEventListener(e, firstInteraction));
+  unlockEvents.forEach(evt => document.addEventListener(evt, unlockAudio, { once: true }));
+
   if (heroSec && avatarVid) {
     new IntersectionObserver(entries => {
       heroVis = entries[0].isIntersecting;
       if (!heroVis) avatarVid.muted = true;
-      else if (voiceOn && !voiceMuted) setTimeout(() => { if (heroVis) avatarVid.muted = false; }, 200);
+      else if (voiceOn && !voiceMuted) forceUnmute();
     }, { threshold: 0.15 }).observe(heroSec);
   }
 
