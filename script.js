@@ -254,7 +254,6 @@
         if (prev) { prev.style.display = 'none'; }
         document.getElementById('tg-file').value = '';
       }
-      setTimeout(() => addTgMsg('✅ Got it! I’ll reply soon on WhatsApp or Instagram.', false), 800);
     } catch(err) {
       addTgMsg('❌ Failed to send. Try WhatsApp instead!', false);
     }
