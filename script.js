@@ -9,6 +9,7 @@
     setTimeout(() => {
       loader.classList.add('done');
       loaderDone = true;  // Voice unlock enabled only after this
+      triggerAutoJumpAndScroll();
     }, 1800);
   });
 
@@ -44,10 +45,13 @@
   }
   function firstInteraction() {
     if (!loaderDone) return;
-    enableVoice();
+    // Delay voice slightly so page is fully visible first
+    setTimeout(() => {
+      if (loaderDone && heroVis) enableVoice();
+    }, 1000);
     ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.removeEventListener(e, firstInteraction));
   }
-  // Register voice unlock — trigger on ANY interaction for immediate playback
+  // Register voice unlock — trigger on ANY interaction for playback
   ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.addEventListener(e, firstInteraction));
   if (heroSec && avatarVid) {
     new IntersectionObserver(entries => {
@@ -55,6 +59,47 @@
       if (!heroVis) avatarVid.muted = true;
       else if (voiceOn && !voiceMuted) setTimeout(() => { if (heroVis) avatarVid.muted = false; }, 200);
     }, { threshold: 0.15 }).observe(heroSec);
+  }
+
+  /* ─── AUTO SCROLL FEATURE ─── */
+  let autoScrollActive = false;
+  let autoScrollRaf = null;
+
+  function stopAutoScroll() {
+    autoScrollActive = false;
+    if (autoScrollRaf) cancelAnimationFrame(autoScrollRaf);
+  }
+
+  ['wheel', 'touchmove', 'keydown', 'mousedown'].forEach(evt => {
+    window.addEventListener(evt, stopAutoScroll, { passive: true });
+  });
+
+  function startSmoothScroll() {
+    autoScrollActive = true;
+    function step() {
+      if (!autoScrollActive) return;
+      window.scrollBy(0, 1.2);
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+        stopAutoScroll();
+        return;
+      }
+      autoScrollRaf = requestAnimationFrame(step);
+    }
+    autoScrollRaf = requestAnimationFrame(step);
+  }
+
+  function triggerAutoJumpAndScroll() {
+    setTimeout(() => {
+      if (window.scrollY < 100 && !autoScrollActive) {
+        const workSec = document.getElementById('work');
+        if (workSec) {
+          workSec.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            startSmoothScroll();
+          }, 1000);
+        }
+      }
+    }, 4500);
   }
 
   /* ─── NAV ─── */
