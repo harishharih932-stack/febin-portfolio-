@@ -2,17 +2,36 @@
 (function () {
   'use strict';
 
-  /* ─── LOADER ─── */
+  /* ─── LOADER & AVATAR VOICE ─── */
   const loader = document.getElementById('pageLoader');
+  const avatarVid  = document.getElementById('avatarVid');
+  const heroSec    = document.getElementById('hero');
   let loaderDone = false;
+  let voiceMuted = true;
+  let voiceOn = false;
+  let heroVis = true;
+
+  // Ensure avatar video stays paused at start (frame 0) while preloader shows
+  if (avatarVid) {
+    avatarVid.pause();
+    avatarVid.currentTime = 0;
+  }
+
   window.addEventListener('load', () => {
     setTimeout(() => {
       loader.classList.add('done');
       loaderDone = true;
-      // Auto-unmute voice 2 seconds after page loads — no button needed
+      
+      // Start video FROM BEGINNING with AUDIO 2 seconds after page load finishes
       setTimeout(() => {
         if (avatarVid) {
+          avatarVid.currentTime = 0;
           avatarVid.muted = false;
+          avatarVid.volume = 1.0;
+          avatarVid.play().catch(() => {
+            // Autoplay policy fallback: play muted if blocked until user touch
+            avatarVid.play();
+          });
           voiceOn = true;
           voiceMuted = false;
         }
@@ -31,16 +50,11 @@
     el.addEventListener('mouseleave', () => { cur.classList.remove('big'); ring.classList.remove('big'); });
   });
 
-  /* ─── AVATAR VOICE ─── */
-  const avatarVid  = document.getElementById('avatarVid');
-  const heroSec    = document.getElementById('hero');
-  let voiceMuted = true;
-  let voiceOn = false;
-  let heroVis = true;
-
   function enableVoice() {
     if (!avatarVid) return;
     avatarVid.muted = false;
+    avatarVid.volume = 1.0;
+    avatarVid.play().catch(() => {});
     voiceOn = true;
     voiceMuted = false;
   }
@@ -50,7 +64,7 @@
     voiceOn = false;
     voiceMuted = true;
   }
-  // Fallback: if autoplay policy blocks unmute, first user interaction will unlock
+  // Fallback: if browser blocks autoplay audio, first user interaction will immediately enable audio
   function firstInteraction() {
     if (!loaderDone) return;
     enableVoice();
@@ -65,7 +79,7 @@
     }, { threshold: 0.15 }).observe(heroSec);
   }
 
-  /* ─── AUTO SCROLL BUTTON (2x speed) ─── */
+  /* ─── AUTO SCROLL BUTTON (Faster 4.5px speed) ─── */
   let autoScrollActive = false;
   let autoScrollRaf = null;
   const scrollBtn = document.getElementById('autoScrollBtn');
@@ -81,7 +95,7 @@
     if (scrollBtn) { scrollBtn.classList.add('active'); scrollBtn.title = 'Stop Scroll'; }
     function step() {
       if (!autoScrollActive) return;
-      window.scrollBy(0, 2.4);
+      window.scrollBy(0, 4.5);
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
         stopAutoScroll();
         return;
