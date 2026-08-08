@@ -200,12 +200,67 @@
     });
   }
 
-  /* ─── CONTACT FORM ─── */
-  window.submitForm = function(e) {
+  /* ─── CONTACT FORM → TELEGRAM BOT ─── */
+  const TG_TOKEN = '8833102069:AAGAfVFAzizuQhwjYf8njU7LRSWW1HAs7uo';
+  const TG_CHAT  = '5388147485';
+  const TG_API   = `https://api.telegram.org/bot${TG_TOKEN}`;
+
+  window.updateFileName = function(input) {
+    const label = document.getElementById('cf-file-name');
+    if (label) label.textContent = input.files[0] ? input.files[0].name : 'Choose file…';
+  };
+
+  window.submitForm = async function(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.textContent = '✓ Message Sent!'; btn.style.background = '#22c55e'; btn.style.color = '#fff';
-    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; btn.style.color = ''; e.target.reset(); }, 3000);
+    const btn    = document.getElementById('cf-submit');
+    const status = document.getElementById('cf-status');
+    const name   = (document.getElementById('cf-name')?.value || '').trim();
+    const email  = (document.getElementById('cf-email')?.value || '').trim();
+    const project= (document.getElementById('cf-project')?.value || '').trim();
+    const msg    = (document.getElementById('cf-msg')?.value || '').trim();
+    const fileEl = document.getElementById('cf-file');
+    const file   = fileEl?.files[0];
+
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    status.style.display = 'none';
+
+    const text = [
+      '📩 *New Portfolio Message*',
+      `👤 *Name:* ${name}`,
+      `📧 *Email:* ${email}`,
+      project ? `🎬 *Project:* ${project}` : '',
+      msg ? `💬 *Message:* ${msg}` : '',
+    ].filter(Boolean).join('\n');
+
+    try {
+      // Send text message
+      await fetch(`${TG_API}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'Markdown' })
+      });
+
+      // Send file if attached
+      if (file) {
+        const fd = new FormData();
+        fd.append('chat_id', TG_CHAT);
+        const isVideo = file.type.startsWith('video/');
+        fd.append(isVideo ? 'video' : 'photo', file);
+        fd.append('caption', `📂 File from: ${name}`);
+        await fetch(`${TG_API}/send${isVideo ? 'Video' : 'Photo'}`, { method: 'POST', body: fd });
+      }
+
+      btn.textContent = '✓ Sent!'; btn.style.background = '#22c55e';
+      status.textContent = '🎉 Message delivered to Febin!';
+      status.style.color = '#22c55e'; status.style.display = 'block';
+      e.target.reset();
+      if (document.getElementById('cf-file-name')) document.getElementById('cf-file-name').textContent = 'Choose file…';
+      setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; btn.disabled = false; status.style.display = 'none'; }, 4000);
+    } catch(err) {
+      btn.textContent = 'Send Message →'; btn.disabled = false;
+      status.textContent = '❌ Failed to send. Try WhatsApp!';
+      status.style.color = '#ef4444'; status.style.display = 'block';
+    }
   };
 
   /* ─── SMOOTH ANCHOR ─── */

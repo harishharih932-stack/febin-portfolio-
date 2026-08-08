@@ -370,3 +370,15 @@ em{font-style:italic;color:var(--acc)}
   .stats-row{flex-wrap:wrap;gap:28px}.ft-inner{flex-direction:column;text-align:center}
   .sec{padding:80px 0}.con{padding:0 20px}
 }
+
+/* ── TOOL CHIPS WITH LOGOS ── */
+.tool-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:6px 14px;font-size:13px;font-weight:500;color:rgba(255,255,255,.85);transition:background .3s,border-color .3s}
+.tool-chip:hover{background:rgba(200,169,110,.12);border-color:var(--acc)}
+.tool-chip img{width:20px;height:20px;object-fit:contain;border-radius:4px}
+.ab-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+
+/* ── FILE UPLOAD BUTTON ── */
+.cf-file-label{display:flex;align-items:center;gap:10px;padding:12px 18px;background:rgba(255,255,255,.05);border:1.5px dashed rgba(255,255,255,.2);border-radius:10px;cursor:pointer;transition:border-color .3s,background .3s;color:rgba(255,255,255,.6);font-size:14px;width:100%}
+.cf-file-label:hover{border-color:var(--acc);background:rgba(200,169,110,.08);color:var(--acc)}
+.cf-file-label svg{flex-shrink:0;opacity:.7}
+
