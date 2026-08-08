@@ -251,7 +251,6 @@
         await fetch(`${TG_API}/send${isVid ? 'Video' : 'Photo'}`, { method: 'POST', body: fd });
         tgPendingFile = null;
         const prev = document.getElementById('tg-file-preview');
-        if (prev) { prev.style.display = 'none'; }
         document.getElementById('tg-file').value = '';
       }
     } catch(err) {
@@ -259,6 +258,40 @@
     }
     sendBtn.disabled = false;
   };
+
+  /* ─── REAL-TIME TELEGRAM POLLING (RECEIVE REPLIES FROM FEBIN) ─── */
+  let tgLastUpdateId = 0;
+
+  async function pollTelegramUpdates() {
+    try {
+      const res = await fetch(`${TG_API}/getUpdates?offset=${tgLastUpdateId + 1}&timeout=1`);
+      const data = await res.json();
+      if (data.ok && Array.isArray(data.result)) {
+        data.result.forEach(update => {
+          tgLastUpdateId = update.update_id;
+          const msg = update.message || update.channel_post;
+          if (msg && msg.text) {
+            // Only render replies from Febin (ignore messages starting with 📬 *New Message)
+            if (!msg.text.startsWith('📬 *New Message')) {
+              addTgMsg(msg.text, false);
+            }
+          }
+        });
+      }
+    } catch(e) {}
+  }
+
+  async function initTgOffset() {
+    try {
+      const res = await fetch(`${TG_API}/getUpdates?limit=10`);
+      const data = await res.json();
+      if (data.ok && Array.isArray(data.result) && data.result.length > 0) {
+        tgLastUpdateId = data.result[data.result.length - 1].update_id;
+      }
+    } catch(e) {}
+    setInterval(pollTelegramUpdates, 3000);
+  }
+  initTgOffset();
 
   /* ─── SMOOTH ANCHOR ─── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
