@@ -8,8 +8,15 @@
   window.addEventListener('load', () => {
     setTimeout(() => {
       loader.classList.add('done');
-      loaderDone = true;  // Voice unlock enabled only after this
-      triggerAutoJumpAndScroll();
+      loaderDone = true;
+      // Auto-unmute voice 2 seconds after page loads — no button needed
+      setTimeout(() => {
+        if (avatarVid) {
+          avatarVid.muted = false;
+          voiceOn = true;
+          voiceMuted = false;
+        }
+      }, 2000);
     }, 1800);
   });
 
@@ -43,15 +50,12 @@
     voiceOn = false;
     voiceMuted = true;
   }
+  // Fallback: if autoplay policy blocks unmute, first user interaction will unlock
   function firstInteraction() {
     if (!loaderDone) return;
-    // Delay voice slightly so page is fully visible first
-    setTimeout(() => {
-      if (loaderDone && heroVis) enableVoice();
-    }, 1000);
+    enableVoice();
     ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.removeEventListener(e, firstInteraction));
   }
-  // Register voice unlock — trigger on ANY interaction for playback
   ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.addEventListener(e, firstInteraction));
   if (heroSec && avatarVid) {
     new IntersectionObserver(entries => {
@@ -61,24 +65,23 @@
     }, { threshold: 0.15 }).observe(heroSec);
   }
 
-  /* ─── AUTO SCROLL FEATURE ─── */
+  /* ─── AUTO SCROLL BUTTON (2x speed) ─── */
   let autoScrollActive = false;
   let autoScrollRaf = null;
+  const scrollBtn = document.getElementById('autoScrollBtn');
 
   function stopAutoScroll() {
     autoScrollActive = false;
     if (autoScrollRaf) cancelAnimationFrame(autoScrollRaf);
+    if (scrollBtn) { scrollBtn.classList.remove('active'); scrollBtn.title = 'Auto Scroll'; }
   }
 
-  ['wheel', 'touchmove', 'keydown', 'mousedown'].forEach(evt => {
-    window.addEventListener(evt, stopAutoScroll, { passive: true });
-  });
-
-  function startSmoothScroll() {
+  function startAutoScroll() {
     autoScrollActive = true;
+    if (scrollBtn) { scrollBtn.classList.add('active'); scrollBtn.title = 'Stop Scroll'; }
     function step() {
       if (!autoScrollActive) return;
-      window.scrollBy(0, 1.2);
+      window.scrollBy(0, 2.4);
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
         stopAutoScroll();
         return;
@@ -88,19 +91,17 @@
     autoScrollRaf = requestAnimationFrame(step);
   }
 
-  function triggerAutoJumpAndScroll() {
-    setTimeout(() => {
-      if (window.scrollY < 100 && !autoScrollActive) {
-        const workSec = document.getElementById('work');
-        if (workSec) {
-          workSec.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(() => {
-            startSmoothScroll();
-          }, 1000);
-        }
-      }
-    }, 4500);
+  if (scrollBtn) {
+    scrollBtn.addEventListener('click', () => {
+      if (autoScrollActive) stopAutoScroll();
+      else startAutoScroll();
+    });
   }
+
+  // Stop auto-scroll if user manually scrolls/touches
+  ['wheel', 'touchmove'].forEach(evt => {
+    window.addEventListener(evt, stopAutoScroll, { passive: true });
+  });
 
   /* ─── NAV ─── */
   const nav = document.getElementById('nav');
