@@ -7,35 +7,23 @@
   const avatarVid  = document.getElementById('avatarVid');
   const heroSec    = document.getElementById('hero');
   let loaderDone = false;
-  let voiceMuted = true;
-  let voiceOn = false;
+  let voiceMuted = false;
+  let voiceOn = true;
   let heroVis = true;
-
-  // Ensure avatar video stays paused at start (frame 0) while preloader shows
-  if (avatarVid) {
-    avatarVid.pause();
-    avatarVid.currentTime = 0;
-  }
 
   window.addEventListener('load', () => {
     setTimeout(() => {
       loader.classList.add('done');
       loaderDone = true;
-      
-      // Start video FROM BEGINNING with AUDIO 2 seconds after page load finishes
-      setTimeout(() => {
-        if (avatarVid) {
-          avatarVid.currentTime = 0;
-          avatarVid.muted = false;
-          avatarVid.volume = 1.0;
-          avatarVid.play().catch(() => {
-            // Autoplay policy fallback: play muted if blocked until user touch
-            avatarVid.play();
-          });
-          voiceOn = true;
-          voiceMuted = false;
-        }
-      }, 2000);
+      if (avatarVid) {
+        avatarVid.muted = false;
+        avatarVid.volume = 1.0;
+        avatarVid.play().catch(() => {
+          // If browser policy blocks unmuted autoplay, play muted first then unmute on user touch
+          avatarVid.muted = true;
+          avatarVid.play();
+        });
+      }
     }, 1800);
   });
 
@@ -64,9 +52,7 @@
     voiceOn = false;
     voiceMuted = true;
   }
-  // Fallback: if browser blocks autoplay audio, first user interaction will immediately enable audio
   function firstInteraction() {
-    if (!loaderDone) return;
     enableVoice();
     ['mousemove','click','touchstart','keydown','scroll'].forEach(e => document.removeEventListener(e, firstInteraction));
   }
